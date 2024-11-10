@@ -1,0 +1,33 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+
+entity modncounter is
+generic(N: integer:=6);
+
+port(clk,rst: in STD_LOGIC;
+
+	  Q: out integer range 0 to N-1);
+end modncounter;
+
+architecture Behavioral of modncounter is
+
+signal temp: integer range 0 to N-1;
+begin
+process(clk,rst)
+begin
+
+if(clk'event and clk ='1')then
+if (rst='1' OR temp >= N-1) then 
+temp<=0;
+else
+temp<=temp+1;
+end if;
+end if;
+Q<=temp;
+end process;
+end Behavioral;
+

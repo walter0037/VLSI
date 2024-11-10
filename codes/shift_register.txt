@@ -1,0 +1,48 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+
+entity shiftregister is
+Port ( din: in  STD_LOGIC_VECTOR(3 DOWNTO 0);
+       clk,rst : in  STD_LOGIC;
+		 S : in  STD_LOGIC_VECTOR(1 DOWNTO 0);
+       dout: inout  STD_LOGIC_VECTOR(3 DOWNTO 0));
+
+end shiftregister;
+
+architecture Behavioral of shiftregister is
+
+signal msbin,lsbin:STD_LOGIC;
+begin
+process(rst,clk)
+begin
+
+if rst=('1')then
+dout<="0000";
+elsif(clk'event and clk='1')then
+msbin<=din(3);
+lsbin<=din(0);
+
+case s is
+when "00" =>dout<=dout;--hold
+when "01"=>dout<=msbin & dout(3 downto 1);--rightshit
+when "10"=>dout<=dout(2 downto 0)& lsbin;--leftshit
+when "11"=>dout<=din;--parallel
+when others=>dout<="XXXX";
+end case;
+end if;
+end process;
+end Behavioral;
+
+
+
+
+
+
+
+
+
+

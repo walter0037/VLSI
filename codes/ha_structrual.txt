@@ -1,0 +1,30 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity ha1 is
+    Port ( A : in  STD_LOGIC;
+           B : in  STD_LOGIC;
+           S : out  STD_LOGIC;
+           C : out  STD_LOGIC);
+end ha1;
+
+architecture structrual of ha1 is
+component XOR11 
+port(
+A,B:in STD_LOGIC;
+C:out STD_LOGIC);
+end component;
+
+component AND11 
+port(
+X,Y:in STD_LOGIC;
+Z:out STD_LOGIC);
+end component;
+
+begin
+A1:XOR11 port map(A,B,S);
+A2:AND11 port map(A,B,C);
+end structrual;
+

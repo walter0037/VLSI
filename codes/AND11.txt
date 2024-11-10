@@ -1,0 +1,21 @@
+AND11:
+
+
+AND11:
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity AND11 is
+port(X,Y: in std_logic;
+Z: out std_logic);
+
+end AND21;
+
+architecture Behavioral of AND11 is
+
+begin
+Z<= X AND Y;
+
+end Behavioral;
