@@ -1,0 +1,82 @@
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--USE ieee.numeric_std.ALL;
+ 
+ENTITY tb IS
+END tb;
+ 
+ARCHITECTURE behavior OF tb IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT USR
+    PORT(
+         din : IN  std_logic_vector(3 downto 0);
+         S : IN  std_logic_vector(1 downto 0);
+         clk : IN  std_logic;
+         rst : IN  std_logic;
+         dout : INOUT  std_logic_vector(3 downto 0)
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal din : std_logic_vector(3 downto 0) := (others => '0');
+   signal S : std_logic_vector(1 downto 0) := (others => '0');
+   signal clk : std_logic := '0';
+   signal rst : std_logic := '0';
+
+	--BiDirs
+   signal dout : std_logic_vector(3 downto 0);
+
+   -- Clock period definitions
+   constant clk_period : time := 100 ns;
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: USR PORT MAP (
+          din => din,
+          S => S,
+          clk => clk,
+          rst => rst,
+          dout => dout
+        );
+
+   -- Clock process definitions
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process;
+ 
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+    rst<='1';
+	assert dout<="0000"; Report"error in Logic";
+	wait for 100 ns;	
+	rst<='0';
+	wait for 100 ns;
+	din<="1000";
+	wait for 100 ns;
+	S<="01";
+	wait for 100 ns;
+	assert dout<="1000"; Report"error in Logic";
+	wait for 100 ns;
+	assert dout<="1100"; Report"error in Logic";
+	wait for 100 ns;
+	assert dout<="1110"; Report"error in Logic";
+	wait for 100 ns;
+	assert dout<="1111"; Report"error in Logic";
+      wait;
+   end process;
+
+END;

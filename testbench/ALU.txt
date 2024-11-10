@@ -1,0 +1,99 @@
+
+LIBRARY ieee;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+ENTITY tb IS
+END tb;
+ 
+ARCHITECTURE behavior OF tb IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT ALU
+    PORT(
+         A : IN  std_logic_vector(3 downto 0);
+         B : IN  std_logic_vector(3 downto 0);
+         S : IN  std_logic_vector(3 downto 0);
+         M : IN  std_logic;
+         Y : OUT  std_logic_vector(3 downto 0)
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal A : std_logic_vector(3 downto 0) := (others => '0');
+   signal B : std_logic_vector(3 downto 0) := (others => '0');
+   signal S : std_logic_vector(3 downto 0) := (others => '0');
+   signal M : std_logic := '0';
+
+ 	--Outputs
+   signal Y : std_logic_vector(3 downto 0);
+   -- No clocks detected in port list. Replace <clock> below with 
+   -- appropriate port name 
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: ALU PORT MAP (
+          A => A,
+          B => B,
+          S => S,
+          M => M,
+          Y => Y
+        );
+
+ 
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+   M<='0'; A<="1000"; B<="0001"; S<="0000"; 
+   wait for 100 ns;	
+	assert Y<=A+B;
+	wait for 100 ns;
+   M<='0'; A<="1000"; B<="0001"; S<="0001";
+   wait for 100 ns;	
+	assert Y<=A-B;
+	wait for 100 ns;
+	M<='0'; A<="1000"; B<="0001";  S<="0010";
+   wait for 100 ns;	
+	assert Y<=A+ '1';
+	wait for 100 ns;
+   M<='0'; A<="1000"; B<="0001";  S<="0011";
+   wait for 100 ns;	
+	assert Y<=A- '1';
+	wait for 100 ns;
+	 M<='0'; A<="1000"; B<="0001"; S<="1111"; 
+   wait for 100 ns;	
+	assert Y<="0000";
+	wait for 100 ns;
+	M<='1'; A<="1000"; B<="0001"; S<="0000"; 
+   wait for 100 ns;	
+	assert Y<=(A AND B);
+	wait for 100 ns;
+   M<='1'; A<="1000"; B<="0001"; S<="0001";
+   wait for 100 ns;	
+	assert Y<=(A OR B);
+	wait for 100 ns;
+	M<='1'; A<="1000"; B<="0001";  S<="0010";
+   wait for 100 ns;	
+	assert Y<=(A NAND B);
+	wait for 100 ns;
+   M<='1'; A<="1000"; B<="0001";  S<="0011";
+   wait for 100 ns;	
+	assert Y<=(NOT A);
+	wait for 100 ns;
+	 M<='1'; A<="1000"; B<="0001"; S<="1111"; 
+   wait for 100 ns;	
+	assert Y<="0000";
+	wait for 100 ns;
+   
+
+      -- insert stimulus here 
+
+      wait;
+   end process;
+
+END;
