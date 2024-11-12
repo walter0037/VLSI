@@ -1,0 +1,17 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity XOR11 is
+port(A,B: in std_logic;
+C: out std_logic);
+
+end XOR11;
+
+architecture Behavioral of XOR11 is
+
+begin
+C<= A XOR B;
+
+end Behavioral;
+
